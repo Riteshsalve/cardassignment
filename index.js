@@ -11,14 +11,12 @@ function toggleDropdown(event) {
     event.stopPropagation(); 
     var dropdownContent = this.nextElementSibling;
     dropdownContent.classList.toggle("show");
-    
 
     var overlay = document.querySelector(".overlay");
     overlay.style.display = "block";
 }
 
 function closeDropdowns() {
-
     var dropdowns = document.querySelectorAll(".dropdown-content");
     dropdowns.forEach(function(dropdown) {
         dropdown.classList.remove("show");
@@ -59,6 +57,14 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener("click", toggleDropdown);
     });
 
+    // Stop propagation when clicking on select tags
+    var selectTags = document.querySelectorAll("select");
+    selectTags.forEach(function(selectTag) {
+        selectTag.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+    });
+
     var overlay = document.querySelector(".overlay");
     overlay.addEventListener("click", closeDropdowns);
 
@@ -66,7 +72,24 @@ document.addEventListener("DOMContentLoaded", function() {
     cardItems.forEach(function(item) {
         item.addEventListener("click", function(event) {
             toggleAccordion(item);
-            
         });
+    });
+
+    var checkboxes = document.querySelectorAll('.main-card .radion-button');
+
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('click', function(event) {
+            event.stopPropagation();
+            checkbox.checked = !checkbox.checked;
+        });
+    });
+
+    var colorSelects = document.querySelectorAll(".color-select");
+
+    colorSelects.forEach(function(select) {
+      select.addEventListener("change", function() {
+        var selectedColor = this.options[this.selectedIndex].value;
+        this.style.backgroundColor = selectedColor;
+      });
     });
 });
